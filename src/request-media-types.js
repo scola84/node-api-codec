@@ -24,8 +24,8 @@ function handle(factories, request, response) {
   if (!factory) {
     const header = Object.keys(factories).join(', ');
     response.setHeader('Accept', header);
-    
-    throw new Error('Media type ' + type[0] + ' is not acceptable');
+
+    throw new Error('Media type ' + type[0] + ' not acceptable');
   }
 
   const transformer = factory.create(request, response);
