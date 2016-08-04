@@ -5,7 +5,7 @@ export default function responseMediaType(factory) {
       response.setHeader('Content-Type', factory.type);
       response.setTransformer('Content-Type', transformer);
     } catch (error) {
-      next(new Error('415 ' + error.message));
+      next(new Error('415 invalid_response ' + error.message));
       return;
     }
 

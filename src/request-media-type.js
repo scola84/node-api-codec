@@ -4,7 +4,7 @@ export default function requestMediaType(factory) {
       const transformer = factory.create(request, response);
       request.setTransformer('Content-Type', transformer);
     } catch (error) {
-      next(new Error('406 ' + error.message));
+      next(new Error('406 invalid_request ' + error.message));
       return;
     }
 

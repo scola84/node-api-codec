@@ -42,7 +42,7 @@ export default function requestMediaTypes(...factories) {
     try {
       handle(factories, request, response);
     } catch (error) {
-      next(new Error('406 ' + error.message));
+      next(new Error('406 invalid_request ' + error.message));
       return;
     }
 

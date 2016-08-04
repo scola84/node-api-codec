@@ -29,7 +29,7 @@ export default function responseMediaTypes(...factories) {
     try {
       handle(factories, request, response);
     } catch (error) {
-      next(new Error('415 ' + error.message));
+      next(new Error('415 invalid_response ' + error.message));
       return;
     }
 
