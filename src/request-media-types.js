@@ -1,4 +1,5 @@
 import wildcard from 'wildcard';
+import { ScolaError } from '@scola/error';
 
 function find(factories, type) {
   const keys = Object.keys(factories);
@@ -42,7 +43,7 @@ export default function requestMediaTypes(...factories) {
     try {
       handle(factories, request, response);
     } catch (error) {
-      next(new Error('406 invalid_request ' + error.message));
+      next(new ScolaError('406 invalid_request ' + error.message));
       return;
     }
 

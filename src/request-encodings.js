@@ -1,3 +1,5 @@
+import { ScolaError } from '@scola/error';
+
 function handle(factories, request, response) {
   const encoding = request.getHeader('Content-Encoding');
 
@@ -28,7 +30,7 @@ export default function requestEncodings(...factories) {
     try {
       handle(factories, request, response);
     } catch (error) {
-      next(new Error('406 invalid_request ' + error.message));
+      next(new ScolaError('406 invalid_request ' + error.message));
       return;
     }
 

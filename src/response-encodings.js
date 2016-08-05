@@ -1,4 +1,5 @@
 import Negotiator from 'negotiator';
+import { ScolaError } from '@scola/error';
 
 function handle(factories, request, response) {
   if (!request.getHeader('Accept-Encoding')) {
@@ -33,7 +34,7 @@ export default function responseEncodings(...factories) {
     try {
       handle(factories, request, response);
     } catch (error) {
-      next(new Error('415 invalid_response ' + error.message));
+      next(new ScolaError('415 invalid_response ' + error.message));
       return;
     }
 

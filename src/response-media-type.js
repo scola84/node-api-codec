@@ -1,3 +1,5 @@
+import { ScolaError } from '@scola/error';
+
 export default function responseMediaType(factory) {
   return (request, response, next) => {
     try {
@@ -5,7 +7,7 @@ export default function responseMediaType(factory) {
       response.setHeader('Content-Type', factory.type);
       response.setTransformer('Content-Type', transformer);
     } catch (error) {
-      next(new Error('415 invalid_response ' + error.message));
+      next(new ScolaError('415 invalid_response ' + error.message));
       return;
     }
 
