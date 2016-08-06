@@ -1,7 +1,7 @@
 import { ScolaError } from '@scola/error';
 
 function handle(factories, request, response) {
-  const encoding = request.getHeader('Content-Encoding');
+  const encoding = request.header('Content-Encoding');
 
   if (!encoding) {
     return;
@@ -11,13 +11,13 @@ function handle(factories, request, response) {
 
   if (!factory) {
     const header = Object.keys(factories).join(', ');
-    response.setHeader('Accept-Encoding', header);
+    response.header('Accept-Encoding', header);
 
     throw new Error('Encoding ' + encoding + ' not acceptable');
   }
 
   const transformer = factory.create(request, response);
-  request.setTransformer('Content-Encoding', transformer);
+  request.transformer('Content-Encoding', transformer);
 }
 
 export default function requestEncodings(...factories) {

@@ -2,7 +2,7 @@ import Negotiator from 'negotiator';
 import { ScolaError } from '@scola/error';
 
 function handle(factories, request, response) {
-  if (!request.getHeader('Accept')) {
+  if (!request.header('Accept')) {
     return;
   }
 
@@ -16,8 +16,8 @@ function handle(factories, request, response) {
   const factory = factories[type];
   const transformer = factory.create(request, response);
 
-  response.setHeader('Content-Type', factory.type);
-  response.setTransformer('Content-Type', transformer);
+  response.header('Content-Type', factory.type);
+  response.transformer('Content-Type', transformer);
 }
 
 export default function responseMediaTypes(...factories) {

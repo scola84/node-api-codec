@@ -14,7 +14,7 @@ function find(factories, type) {
 }
 
 function handle(factories, request, response) {
-  const type = request.getHeader('Content-Type', true);
+  const type = request.header('Content-Type', true);
 
   if (!type) {
     return;
@@ -24,13 +24,13 @@ function handle(factories, request, response) {
 
   if (!factory) {
     const header = Object.keys(factories).join(', ');
-    response.setHeader('Accept', header);
+    response.header('Accept', header);
 
     throw new Error('Media type ' + type[0] + ' not acceptable');
   }
 
   const transformer = factory.create(request, response);
-  request.setTransformer('Content-Type', transformer);
+  request.transformer('Content-Type', transformer);
 }
 
 export default function requestMediaTypes(...factories) {

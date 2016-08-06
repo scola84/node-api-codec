@@ -2,7 +2,7 @@ import Negotiator from 'negotiator';
 import { ScolaError } from '@scola/error';
 
 function handle(factories, request, response) {
-  if (!request.getHeader('Accept-Encoding')) {
+  if (!request.header('Accept-Encoding')) {
     return;
   }
 
@@ -10,7 +10,7 @@ function handle(factories, request, response) {
   const encoding = negotiator.encoding(Object.keys(factories));
 
   if (!encoding) {
-    if (!(/identity/.test(request.getHeader('Accept-Encoding')))) {
+    if (!(/identity/.test(request.header('Accept-Encoding')))) {
       throw new Error('Encoding ' + encoding + ' not supported');
     }
 
@@ -20,8 +20,8 @@ function handle(factories, request, response) {
   const factory = factories[encoding];
   const transformer = factory.create(request, response);
 
-  response.setHeader('Content-Encoding', factory.encoding);
-  response.setTransformer('Content-Encoding', transformer);
+  response.header('Content-Encoding', factory.encoding);
+  response.transformer('Content-Encoding', transformer);
 }
 
 export default function responseEncodings(...factories) {
