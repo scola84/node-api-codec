@@ -5,16 +5,17 @@
   "repository": "github:scola84/node-api-codec",
   "author": "M.C. van den Boogaart <scola@kvdb.name>",
   "license": "MIT",
-  "main": "./dist/api-codec-deflate.js",
+  "main": "./dist/api-codec.js",
   "jsnext:main": "index.js",
   "dependencies": {
+    "@scola/error": "0.0.0",
     "negotiator": "^0.6.1",
     "wildcard": "^1.1.2"
   },
   "devDependencies": {
-    "rollup": "^0.26.3"
+    "rollup": "^0.34.13"
   },
   "scripts": {
-    "build": "rollup -i index.js -o ./dist/api-codec-deflate.js -f cjs"
+    "build": "rollup -i index.js -o ./dist/api-codec.js -f cjs"
   }
 }
