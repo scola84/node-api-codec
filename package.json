@@ -1,6 +1,6 @@
 {
   "name": "@scola/api-codec",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Codec Filters",
   "repository": "github:scola84/node-api-codec",
   "author": "M.C. van den Boogaart <scola@kvdb.name>",
