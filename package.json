@@ -8,14 +8,21 @@
   "main": "./dist/api-codec.js",
   "jsnext:main": "index.js",
   "dependencies": {
-    "@scola/error": "^4.0.0",
+    "@scola/error": "^4.0.2",
     "negotiator": "^0.6.1",
     "wildcard": "^1.1.2"
   },
   "devDependencies": {
-    "rollup": "^0.35.9"
+    "rollup": "^0.36.1",
+    "rollup-plugin-buble": "^0.14.0",
+    "uglify-js": "^2.7.3"
   },
   "scripts": {
-    "build": "rollup -i index.js -o ./dist/api-codec.js -f cjs"
+    "build": "npm run cleanup && npm run rollup",
+    "build:min": "npm run build && npm run min",
+    "cleanup": "rm -rf dist",
+    "min": "uglifyjs dist/api-codec.js -m -o dist/api-codec.min.js",
+    "prepublish": "npm run build:min",
+    "rollup": "rollup -c"
   }
 }
