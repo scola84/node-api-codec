@@ -1,5 +1,5 @@
 import Negotiator from 'negotiator';
-import { ScolaError } from '@scola/error';
+import { ScolaError } from '@scola/core';
 
 function handle(factories, request, response) {
   if (!request.header('Accept-Encoding')) {

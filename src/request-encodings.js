@@ -1,4 +1,4 @@
-import { ScolaError } from '@scola/error';
+import { ScolaError } from '@scola/core';
 
 function handle(factories, request, response) {
   const encoding = request.header('Content-Encoding');

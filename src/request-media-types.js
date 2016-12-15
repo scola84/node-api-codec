@@ -1,5 +1,5 @@
 import wildcard from 'wildcard';
-import { ScolaError } from '@scola/error';
+import { ScolaError } from '@scola/core';
 
 function find(factories, type) {
   const keys = Object.keys(factories);
