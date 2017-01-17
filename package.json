@@ -1,15 +1,13 @@
 {
   "name": "@scola/api-codec",
   "version": "1.1.0",
-  "description": "Codec Filters",
+  "description": "Codecs",
   "repository": "github:scola84/node-api-codec",
   "author": "M.C. van den Boogaart <scola@kvdb.name>",
   "license": "MIT",
   "main": "./dist/api-codec.js",
   "jsnext:main": "index.js",
   "dependencies": {
-    "@scola/core": "^1.2.0",
-    "negotiator": "^0.6.1",
-    "wildcard": "^1.1.2"
+    "negotiator": "^0.6.1"
   }
 }
