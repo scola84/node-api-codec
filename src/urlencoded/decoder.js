@@ -1,22 +1,9 @@
-import { Transform } from 'stream';
+import Decoder from '../decoder';
 
-export default class UrlDecoder extends Transform {
+export default class UrlEncodedDecoder extends Decoder {
   constructor() {
-    super({
-      objectMode: true
-    });
-
-    this._options = null;
+    super();
     this._data = '';
-  }
-
-  options(value = null) {
-    if (value === null) {
-      return this._options;
-    }
-
-    this._options = value;
-    return this;
   }
 
   _transform(data, encoding, callback) {

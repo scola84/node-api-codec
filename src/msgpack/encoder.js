@@ -1,26 +1,9 @@
-import { Transform } from 'stream';
+import Encoder from '../encoder';
 
-export default class MsgPackEncoder extends Transform {
-  constructor() {
-    super({
-      objectMode: true
-    });
-
-    this._options = null;
-  }
-
-  options(value = null) {
-    if (value === null) {
-      return this._options;
-    }
-
-    this._options = value;
-    return this;
-  }
-
+export default class MsgPackEncoder extends Encoder {
   _transform(data, encoding, callback) {
     try {
-      this.push(this._options.encode(data));
+      this.push(this._options.msgpack.encode(data));
       callback();
     } catch (error) {
       callback(error);

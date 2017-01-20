@@ -1,22 +1,17 @@
-import { Transform } from 'stream';
+import Decoder from '../decoder';
 
-export default class JsonDecoder extends Transform {
-  constructor() {
-    super({
-      objectMode: true
-    });
-
-    this._data = '';
+function reviver(key, value) {
+  if (value && value.type === 'Buffer') {
+    return Buffer.from(value.data);
   }
 
+  return value;
+}
+
+export default class JsonDecoder extends Decoder {
   _transform(data, encoding, callback) {
-    this._data += data;
-    callback();
-  }
-
-  _flush(callback) {
     try {
-      this.push(this._data ? JSON.parse(this._data) : null);
+      this.push(JSON.parse(data, reviver));
       callback();
     } catch (error) {
       callback(error);

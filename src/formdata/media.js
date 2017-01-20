@@ -1,24 +1,22 @@
-import Decoder from './decoder';
+import FormDataDecoder from './decoder';
 
 const type = 'multipart/form-data';
 
-export function formdataCodec(options) {
+export function formDataCodec(options = {}) {
   return {
-    decoder(request) {
-      return new Decoder()
-        .options(options)
-        .request(request);
-    },
-    type
+    decoder(stream, connection, request = {}) {
+      return stream.pipe(new FormDataDecoder()
+        .connection(connection)
+        .request(request)
+        .options(options));
+    }
   };
 }
 
-export function formdataFilter(options) {
+export function formDataFilter(options = {}) {
   return (request, response, next) => {
     if (request.header('Content-Type') === type) {
-      request.transformer('Content-Type', new Decoder()
-        .options(options)
-        .request(request));
+      request.codec(formDataCodec(options));
     }
 
     next();

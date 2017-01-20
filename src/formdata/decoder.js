@@ -1,59 +1,36 @@
-import { Transform } from 'stream';
+import Decoder from '../decoder';
 
-export default class FormDataDecoder extends Transform {
+export default class FormDataDecoder extends Decoder {
   constructor() {
-    super({
-      objectMode: true
-    });
-
-    this._options = null;
-    this._request = null;
-    this._instance = null;
+    super();
+    this._decoder = null;
     this._data = {};
   }
 
-  options(value = null) {
-    if (value === null) {
-      return this._options;
-    }
-
-    this._options = value;
-    return this;
-  }
-
-  request(value = null) {
-    if (value === null) {
-      return this._request;
-    }
-
-    this._request = value;
-    return this;
-  }
-
   _transform(chunk, encoding, callback) {
-    this._decoder().write(chunk);
+    this._instance().write(chunk);
     callback();
   }
 
   _decoder() {
-    if (this._instance) {
-      return this._instance;
+    if (this._decoder) {
+      return this._decoder;
     }
 
-    this._instance = new this._options.Busboy(Object.assign({
+    this._decoder = new this._options.Busboy(Object.assign({
       headers: this._request.headers()
     }, this._options));
 
-    this._instance.once('error', (error) => {
-      this._instance.removeAllListeners();
+    this._decoder.once('error', (error) => {
+      this._decoder.removeAllListeners();
       this.emit('error', error);
     });
 
-    this._instance.addListener('field', (name, value) => {
+    this._decoder.addListener('field', (name, value) => {
       this._data[name] = value;
     });
 
-    this._instance.addListener('file', (name, fileStream, fileName,
+    this._decoder.addListener('file', (name, fileStream, fileName,
       encoding, mimeType) => {
 
       fileStream.emit('end');
@@ -65,11 +42,11 @@ export default class FormDataDecoder extends Transform {
       };
     });
 
-    this._instance.once('finish', () => {
-      this._instance.removeAllListeners();
+    this._decoder.once('finish', () => {
+      this._decoder.removeAllListeners();
       this.push(this._data);
     });
 
-    return this._instance;
+    return this._decoder;
   }
 }

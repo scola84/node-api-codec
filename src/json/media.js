@@ -1,16 +1,19 @@
 import Negotiator from 'negotiator';
-import Decoder from './decoder';
-import Encoder from './encoder';
+import JsonDecoder from './decoder';
+import JsonEncoder from './encoder';
 
 const type = 'application/json';
 
 export function jsonCodec() {
   return {
-    decoder() {
-      return new Decoder();
+    decoder(stream, connection, request = {}) {
+      return stream.pipe(new JsonDecoder()
+        .connection(connection)
+        .request(request));
     },
-    encoder() {
-      return new Encoder();
+    encoder(stream, connection) {
+      return stream.pipe(new JsonEncoder()
+        .connection(connection));
     },
     type
   };
@@ -19,7 +22,7 @@ export function jsonCodec() {
 export function jsonFilter() {
   return (request, response, next) => {
     if (request.header('Content-Type') === type) {
-      request.transformer('Content-Type', new Decoder());
+      request.codec(jsonCodec());
     }
 
     if (request.header('Accept')) {
@@ -27,7 +30,7 @@ export function jsonFilter() {
 
       if (negotiator.mediaType([type]) === type) {
         response.header('Content-Type', type);
-        response.transformer('Content-Type', new Encoder());
+        response.codec(jsonCodec());
       }
     }
 

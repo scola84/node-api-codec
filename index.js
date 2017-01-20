@@ -1,6 +1,5 @@
 export {
-  formdataCodec,
-  formdataFilter
+  formDataFilter
 } from './src/formdata/media';
 
 export {
@@ -9,11 +8,14 @@ export {
 } from './src/json/media';
 
 export {
-  msgpackCodec,
-  msgpackFilter
+  msgPackCodec,
+  msgPackFilter
 } from './src/msgpack/media';
 
 export {
-  urlencodedCodec,
-  urlencodedFilter
+  sodiumCodec
+} from './src/sodium/media';
+
+export {
+  urlEncodedFilter
 } from './src/urlencoded/media';

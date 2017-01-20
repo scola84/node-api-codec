@@ -1,28 +1,30 @@
 import Negotiator from 'negotiator';
-import Decoder from './decoder';
-import Encoder from './encoder';
+import MsgPackDecoder from './decoder';
+import MsgPackEncoder from './encoder';
 
 const type = 'application/msgpack';
 
-export function msgpackCodec(options) {
+export function msgPackCodec(options = {}) {
   return {
-    decoder() {
-      return new Decoder()
-        .options(options);
+    decoder(stream, connection, request = {}) {
+      return stream.pipe(new MsgPackDecoder()
+        .connection(connection)
+        .request(request)
+        .options(options));
     },
-    encoder() {
-      return new Encoder()
-        .options(options);
+    encoder(stream, connection) {
+      return stream.pipe(new MsgPackEncoder()
+        .connection(connection)
+        .options(options));
     },
     type
   };
 }
 
-export function msgpackFilter(options) {
+export function msgPackFilter(options = {}) {
   return (request, response, next) => {
     if (request.header('Content-Type') === type) {
-      request.transformer('Content-Type', new Decoder()
-        .options(options));
+      request.codec(msgPackCodec(options));
     }
 
     if (request.header('Accept')) {
@@ -30,8 +32,7 @@ export function msgpackFilter(options) {
 
       if (negotiator.mediaType([type]) === type) {
         response.header('Content-Type', type);
-        response.transformer('Content-Type', new Encoder()
-          .options(options));
+        response.codec(msgPackCodec(options));
       }
     }
 

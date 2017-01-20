@@ -1,22 +1,22 @@
-import Decoder from './decoder';
+import UrlEncodedDecoder from './decoder';
 
 const type = 'application/x-www-form-urlencoded';
 
-export function urlencodedCodec(options) {
+export function urlEncodedCodec(options = {}) {
   return {
-    decoder() {
-      return new Decoder()
-        .options(options);
-    },
-    type
+    decoder(stream, connection, request) {
+      return stream.pipe(new UrlEncodedDecoder()
+        .connection(connection)
+        .request(request)
+        .options(options));
+    }
   };
 }
 
-export function urlencodedFilter(options) {
+export function urlEncodedFilter(options = {}) {
   return (request, response, next) => {
     if (request.header('Content-Type') === type) {
-      request.transformer('Content-Type', new Decoder()
-        .options(options));
+      request.codec(urlEncodedCodec(options));
     }
 
     next();

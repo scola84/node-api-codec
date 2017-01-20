@@ -1,30 +1,13 @@
-import { Transform } from 'stream';
 import { Buffer } from 'buffer';
+import Decoder from '../decoder';
 
-export default class MsgPackDecoder extends Transform {
-  constructor() {
-    super({
-      objectMode: true
-    });
-
-    this._options = null;
-  }
-
-  options(value = null) {
-    if (value === null) {
-      return this._options;
-    }
-
-    this._options = value;
-    return this;
-  }
-
+export default class MsgPackDecoder extends Decoder {
   _transform(data, encoding, callback) {
     try {
       if (typeof Blob !== 'undefined' && data instanceof Blob) {
         this._blob(data, callback);
       } else {
-        this.push(this._options.decode(data));
+        this.push(this._options.msgpack.decode(data));
         callback();
       }
     } catch (error) {
@@ -34,6 +17,7 @@ export default class MsgPackDecoder extends Transform {
 
   _blob(data, callback) {
     const reader = new FileReader();
+    const msgpack = this._options.msgpack;
 
     reader.addEventListener('error', () => {
       callback(new Error(reader.error));
@@ -45,7 +29,7 @@ export default class MsgPackDecoder extends Transform {
         return;
       }
 
-      this.push(this._options.decode(Buffer.from(reader.result)));
+      this.push(msgpack.decode(Buffer.from(reader.result)));
       callback();
     });
 
