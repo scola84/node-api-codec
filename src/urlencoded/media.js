@@ -4,7 +4,7 @@ const type = 'application/x-www-form-urlencoded';
 
 export function urlEncodedCodec(options = {}) {
   return {
-    decoder(stream, connection, request) {
+    decoder(stream, connection, request = {}) {
       return stream.pipe(new UrlEncodedDecoder()
         .connection(connection)
         .request(request)
