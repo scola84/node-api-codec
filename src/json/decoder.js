@@ -9,7 +9,7 @@ function reviver(key, value) {
 }
 
 export default class JsonDecoder extends Decoder {
-  _transform(data, encoding, callback) {
+  _transform(data, encoding, callback = () => {}) {
     try {
       this.push(JSON.parse(data, reviver));
       callback();

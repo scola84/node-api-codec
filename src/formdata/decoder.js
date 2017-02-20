@@ -13,8 +13,8 @@ export default class FormDataDecoder extends Decoder {
     this._handleFinish = () => this._finish();
   }
 
-  _transform(chunk, encoding, callback) {
-    this._setUp().write(chunk);
+  _transform(data, encoding, callback = () => {}) {
+    this._setUp().write(data);
     callback();
   }
 

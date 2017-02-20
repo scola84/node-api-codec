@@ -1,7 +1,7 @@
 import Decoder from '../decoder';
 
 export default class SodiumDecoder extends Decoder {
-  _transform(data, encoding, callback) {
+  _transform(data, encoding, callback = () => {}) {
     data = Buffer.from(data);
 
     const sodium = this._options.sodium;

@@ -2,7 +2,7 @@ import { Buffer } from 'buffer';
 import Decoder from '../decoder';
 
 export default class MsgPackDecoder extends Decoder {
-  _transform(data, encoding, callback) {
+  _transform(data, encoding, callback = () => {}) {
     try {
       if (typeof Blob !== 'undefined' && data instanceof Blob) {
         this._blob(data, callback);
@@ -15,7 +15,7 @@ export default class MsgPackDecoder extends Decoder {
     }
   }
 
-  _blob(data, callback) {
+  _blob(data, callback = () => {}) {
     const reader = new FileReader();
     const msgpack = this._options.msgpack;
 
