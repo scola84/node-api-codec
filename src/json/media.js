@@ -4,7 +4,7 @@ import JsonEncoder from './encoder';
 
 const type = 'application/json';
 
-export function jsonCodec() {
+function jsonCodec() {
   return {
     decoder(stream, connection, request = {}) {
       return stream.pipe(new JsonDecoder()
@@ -19,7 +19,7 @@ export function jsonCodec() {
   };
 }
 
-export function jsonFilter() {
+function jsonFilter() {
   return (request, response, next) => {
     if (request.header('Content-Type') === type) {
       request.codec(jsonCodec());
@@ -37,3 +37,8 @@ export function jsonFilter() {
     next();
   };
 }
+
+export {
+  jsonCodec,
+  jsonFilter
+};

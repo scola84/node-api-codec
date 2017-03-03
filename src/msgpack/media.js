@@ -4,7 +4,7 @@ import MsgPackEncoder from './encoder';
 
 const type = 'application/msgpack';
 
-export function msgPackCodec(options = {}) {
+function msgPackCodec(options = {}) {
   return {
     decoder(stream, connection, request = {}) {
       return stream.pipe(new MsgPackDecoder()
@@ -21,7 +21,7 @@ export function msgPackCodec(options = {}) {
   };
 }
 
-export function msgPackFilter(options = {}) {
+function msgPackFilter(options = {}) {
   return (request, response, next) => {
     if (request.header('Content-Type') === type) {
       request.codec(msgPackCodec(options));
@@ -39,3 +39,8 @@ export function msgPackFilter(options = {}) {
     next();
   };
 }
+
+export {
+  msgPackCodec,
+  msgPackFilter
+};

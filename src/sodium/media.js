@@ -3,7 +3,7 @@ import SodiumEncoder from './encoder';
 
 const type = 'x-application/sodium';
 
-export function sodiumCodec(options = {}) {
+function sodiumCodec(options = {}) {
   return {
     decoder(stream, connection, request = {}) {
       return stream.pipe(new SodiumDecoder()
@@ -19,3 +19,7 @@ export function sodiumCodec(options = {}) {
     type
   };
 }
+
+export {
+  sodiumCodec
+};

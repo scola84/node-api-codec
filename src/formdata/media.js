@@ -2,7 +2,7 @@ import FormDataDecoder from './decoder';
 
 const type = 'multipart/form-data';
 
-export function formDataCodec(options = {}) {
+function formDataCodec(options = {}) {
   return {
     decoder(stream, connection, request = {}) {
       return stream.pipe(new FormDataDecoder()
@@ -13,7 +13,7 @@ export function formDataCodec(options = {}) {
   };
 }
 
-export function formDataFilter(options = {}) {
+function formDataFilter(options = {}) {
   return (request, response, next) => {
     if (request.header('Content-Type') === type) {
       request.codec(formDataCodec(options));
@@ -22,3 +22,8 @@ export function formDataFilter(options = {}) {
     next();
   };
 }
+
+export {
+  formDataCodec,
+  formDataFilter
+};

@@ -2,7 +2,7 @@ import UrlEncodedDecoder from './decoder';
 
 const type = 'application/x-www-form-urlencoded';
 
-export function urlEncodedCodec(options = {}) {
+function urlEncodedCodec(options = {}) {
   return {
     decoder(stream, connection, request = {}) {
       return stream.pipe(new UrlEncodedDecoder()
@@ -13,7 +13,7 @@ export function urlEncodedCodec(options = {}) {
   };
 }
 
-export function urlEncodedFilter(options = {}) {
+function urlEncodedFilter(options = {}) {
   return (request, response, next) => {
     if (request.header('Content-Type') === type) {
       request.codec(urlEncodedCodec(options));
@@ -22,3 +22,8 @@ export function urlEncodedFilter(options = {}) {
     next();
   };
 }
+
+export {
+  urlEncodedCodec,
+  urlEncodedFilter
+};
