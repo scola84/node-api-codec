@@ -7,7 +7,5 @@
   "license": "MIT",
   "main": "./dist/api-codec.js",
   "jsnext:main": "index.js",
-  "dependencies": {
-    "negotiator": "^0.6.1"
-  }
+  "dependencies": {}
 }
