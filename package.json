@@ -5,8 +5,8 @@
   "repository": "github:scola84/node-api-codec",
   "author": "M.C. van den Boogaart <scola@kvdb.name>",
   "license": "MIT",
-  "main": "./dist/api-codec.js",
-  "jsnext:main": "index.js",
+  "main": "./index.js",
+  "jsnext:main": "./index.js",
   "dependencies": {
     "negotiator": "^0.6.1"
   }
