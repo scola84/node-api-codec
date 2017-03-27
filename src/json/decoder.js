@@ -1,7 +1,7 @@
 import Decoder from '../decoder';
 
-function reviver(key, value) {
-  if (value && value.type === 'Buffer') {
+function reviver(key, value = null) {
+  if (value !== null && value.type === 'Buffer') {
     return Buffer.from(value.data);
   }
 

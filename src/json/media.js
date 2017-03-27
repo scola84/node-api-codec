@@ -25,7 +25,7 @@ function jsonFilter() {
       request.codec(jsonCodec());
     }
 
-    if (request.header('Accept')) {
+    if (request.header('Accept') !== null) {
       const negotiator = new Negotiator(request);
 
       if (negotiator.mediaType([type]) === type) {
