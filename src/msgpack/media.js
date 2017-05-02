@@ -23,7 +23,9 @@ function msgPackCodec(options = {}) {
 
 function msgPackFilter(options = {}) {
   return (request, response, next) => {
-    if (request.header('Content-Type') === type) {
+    const header = request.header('Content-Type', true);
+
+    if (header[0] === type) {
       request.codec(msgPackCodec(options));
     }
 
