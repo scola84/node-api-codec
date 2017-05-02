@@ -3,7 +3,7 @@ import Encoder from '../encoder';
 export default class SodiumEncoder extends Encoder {
   _transform(data, encoding, callback = () => {}) {
     const sodium = this._options.sodium;
-    const sharedKey = this._connection.upgrade().sharedKey;
+    const sharedKey = this._connection.key();
     const nonce = Buffer.allocUnsafe(sodium.crypto_box_NONCEBYTES);
 
     sodium.randombytes_buf(nonce);

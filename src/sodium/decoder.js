@@ -5,7 +5,7 @@ export default class SodiumDecoder extends Decoder {
     data = Buffer.from(data);
 
     const sodium = this._options.sodium;
-    const sharedKey = this._connection.upgrade().sharedKey;
+    const sharedKey = this._connection.key();
     const nonce = data.slice(0, 24);
 
     data = data.slice(24);
