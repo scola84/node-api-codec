@@ -15,7 +15,9 @@ function urlEncodedCodec(options = {}) {
 
 function urlEncodedFilter(options = {}) {
   return (request, response, next) => {
-    if (request.header('Content-Type') === type) {
+    const header = request.header('Content-Type', true);
+
+    if (header[0] === type) {
       request.codec(urlEncodedCodec(options));
     }
 
