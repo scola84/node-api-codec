@@ -18,6 +18,10 @@ export default class FormDataDecoder extends Decoder {
     callback();
   }
 
+  _flush() {
+    this.push(this._data);
+  }
+
   _bindDecoder() {
     if (this._decoder) {
       this._decoder.on('error', this._handleError);
@@ -72,7 +76,7 @@ export default class FormDataDecoder extends Decoder {
   }
 
   _finish() {
-    this.push(this._data);
+    this.push(null);
     this._tearDown();
   }
 }
