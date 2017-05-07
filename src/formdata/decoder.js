@@ -14,8 +14,12 @@ export default class FormDataDecoder extends Decoder {
   }
 
   _transform(data, encoding, callback = () => {}) {
-    this._setUp().write(data);
-    callback();
+    try {
+      this._setUp().write(data);
+      callback();
+    } catch (error) {
+      callback(error);
+    }
   }
 
   _flush() {
