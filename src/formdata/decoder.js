@@ -28,6 +28,7 @@ export default class FormDataDecoder extends Decoder {
 
   _bindDecoder() {
     if (this._decoder) {
+      this._decoder.setMaxListeners(this._decoder.getMaxListeners() + 1);
       this._decoder.on('error', this._handleError);
       this._decoder.on('field', this._handleField);
       this._decoder.on('file', this._handleFile);
@@ -37,6 +38,7 @@ export default class FormDataDecoder extends Decoder {
 
   _unbindDecoder() {
     if (this._decoder) {
+      this._decoder.setMaxListeners(this._decoder.getMaxListeners() - 1);
       this._decoder.removeListener('error', this._handleError);
       this._decoder.removeListener('field', this._handleField);
       this._decoder.removeListener('file', this._handleFile);
