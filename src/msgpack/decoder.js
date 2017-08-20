@@ -1,4 +1,3 @@
-import { Buffer } from 'buffer';
 import Decoder from '../decoder';
 
 export default class MsgPackDecoder extends Decoder {
