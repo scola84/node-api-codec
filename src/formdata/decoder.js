@@ -52,7 +52,7 @@ export default class FormDataDecoder extends Decoder {
     }
 
     this._decoder = new this._options.Busboy(Object.assign({
-      headers: this._request.headers()
+      headers: this._source.headers()
     }, this._options));
 
     this._bindDecoder();

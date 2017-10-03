@@ -3,10 +3,17 @@ import Encoder from '../encoder';
 export default class JsonEncoder extends Encoder {
   _transform(data, encoding, callback = () => {}) {
     try {
-      this.push(JSON.stringify(data));
-      callback();
+      data = JSON.stringify(data);
     } catch (error) {
       callback(error);
+      return;
     }
+
+    if (Boolean(this._target) === true) {
+      this._target.header('Content-Length', data.length);
+    }
+
+    this.push(data);
+    callback();
   }
 }

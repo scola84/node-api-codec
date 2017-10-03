@@ -3,10 +3,17 @@ import Encoder from '../encoder';
 export default class MsgPackEncoder extends Encoder {
   _transform(data, encoding, callback = () => {}) {
     try {
-      this.push(this._options.msgpack.encode(data));
-      callback();
+      data = this._options.msgpack.encode(data);
     } catch (error) {
       callback(error);
+      return;
     }
+
+    if (Boolean(this._target) === true) {
+      this._target.header('Content-Length', data.length);
+    }
+
+    this.push(data);
+    callback();
   }
 }

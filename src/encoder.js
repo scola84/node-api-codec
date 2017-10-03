@@ -7,7 +7,7 @@ export default class Encoder extends Transform {
     });
 
     this._connection = null;
-    this._request = null;
+    this._target = null;
     this._options = null;
   }
 
@@ -20,12 +20,12 @@ export default class Encoder extends Transform {
     return this;
   }
 
-  request(value = null) {
+  target(value = null) {
     if (value === null) {
-      return this._request;
+      return this._target;
     }
 
-    this._request = value;
+    this._target = value;
     return this;
   }
 

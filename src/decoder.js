@@ -7,7 +7,7 @@ export default class Decoder extends Transform {
     });
 
     this._connection = null;
-    this._request = null;
+    this._source = null;
     this._options = null;
   }
 
@@ -20,12 +20,12 @@ export default class Decoder extends Transform {
     return this;
   }
 
-  request(value = null) {
+  source(value = null) {
     if (value === null) {
-      return this._request;
+      return this._source;
     }
 
-    this._request = value;
+    this._source = value;
     return this;
   }
 

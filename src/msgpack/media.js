@@ -6,15 +6,16 @@ const type = 'application/msgpack';
 
 function msgPackCodec(options = {}) {
   return {
-    decoder(stream, connection, request = {}) {
+    decoder(stream, connection, source = false) {
       return stream.pipe(new MsgPackDecoder()
         .connection(connection)
-        .request(request)
+        .source(source)
         .options(options));
     },
-    encoder(stream, connection) {
+    encoder(stream, connection, target = false) {
       return stream.pipe(new MsgPackEncoder()
         .connection(connection)
+        .target(target)
         .options(options));
     },
     type
@@ -30,7 +31,9 @@ function msgPackFilter(options = {}) {
     }
 
     if (request.header('Accept') !== null) {
-      const negotiator = new Negotiator(request);
+      const negotiator = new Negotiator({
+        headers: request.headers()
+      });
 
       if (negotiator.mediaType([type]) === type) {
         response.header('Content-Type', type);

@@ -5,15 +5,16 @@ const type = 'x-application/sodium';
 
 function sodiumCodec(options = {}) {
   return {
-    decoder(stream, connection, request = {}) {
+    decoder(stream, connection, source = false) {
       return stream.pipe(new SodiumDecoder()
         .connection(connection)
-        .request(request)
+        .source(source)
         .options(options));
     },
-    encoder(stream, connection) {
+    encoder(stream, connection, target = false) {
       return stream.pipe(new SodiumEncoder()
         .connection(connection)
+        .target(target)
         .options(options));
     },
     type

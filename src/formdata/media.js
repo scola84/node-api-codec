@@ -4,10 +4,10 @@ const type = 'multipart/form-data';
 
 function formDataCodec(options = {}) {
   return {
-    decoder(stream, connection, request = {}) {
+    decoder(stream, connection, source = false) {
       return stream.pipe(new FormDataDecoder()
         .connection(connection)
-        .request(request)
+        .source(source)
         .options(options));
     }
   };

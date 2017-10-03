@@ -6,14 +6,15 @@ const type = 'application/json';
 
 function jsonCodec() {
   return {
-    decoder(stream, connection, request = {}) {
+    decoder(stream, connection, source = false) {
       return stream.pipe(new JsonDecoder()
         .connection(connection)
-        .request(request));
+        .source(source));
     },
-    encoder(stream, connection) {
+    encoder(stream, connection, target = false) {
       return stream.pipe(new JsonEncoder()
-        .connection(connection));
+        .connection(connection)
+        .target(target));
     },
     type
   };
@@ -28,7 +29,9 @@ function jsonFilter() {
     }
 
     if (request.header('Accept') !== null) {
-      const negotiator = new Negotiator(request);
+      const negotiator = new Negotiator({
+        headers: request.headers()
+      });
 
       if (negotiator.mediaType([type]) === type) {
         response.header('Content-Type', type);
