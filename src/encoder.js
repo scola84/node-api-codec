@@ -8,7 +8,7 @@ export default class Encoder extends Transform {
 
     this._connection = null;
     this._target = null;
-    this._options = null;
+    this._options = {};
   }
 
   connection(value = null) {

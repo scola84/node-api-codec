@@ -4,17 +4,19 @@ import JsonEncoder from './encoder';
 
 const type = 'application/json';
 
-function jsonCodec() {
+function jsonCodec(options = {}) {
   return {
     decoder(stream, connection, source = false) {
       return stream.pipe(new JsonDecoder()
         .connection(connection)
-        .source(source));
+        .source(source)
+        .options(options));
     },
     encoder(stream, connection, target = false) {
       return stream.pipe(new JsonEncoder()
         .connection(connection)
-        .target(target));
+        .target(target)
+        .options(options));
     },
     type
   };

@@ -8,7 +8,7 @@ export default class Decoder extends Transform {
 
     this._connection = null;
     this._source = null;
-    this._options = null;
+    this._options = {};
   }
 
   connection(value = null) {
