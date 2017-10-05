@@ -37,4 +37,13 @@ export default class Decoder extends Transform {
     this._options = value;
     return this;
   }
+
+  option(name, value = null) {
+    if (value === null) {
+      return this._options[name];
+    }
+
+    this._options[name] = value;
+    return this;
+  }
 }

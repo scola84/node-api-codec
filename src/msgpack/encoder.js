@@ -17,7 +17,10 @@ export default class MsgPackEncoder extends Encoder {
       this._target.header('Content-Length', data.length);
     }
 
-    this.push(data);
+    if (this._options.push !== false) {
+      this.push(data);
+    }
+
     callback();
   }
 }

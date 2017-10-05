@@ -12,7 +12,18 @@ export default class SodiumEncoder extends Encoder {
     data = sodium.crypto_box_easy_afternm(data, nonce, sharedKey);
     data = Buffer.concat([nonce, data], nonce.length + data.length);
 
-    this.push(data);
+    const setLength =
+      this._options.length === true &&
+      Boolean(this._target) === true;
+
+    if (setLength === true) {
+      this._target.header('Content-Length', data.length);
+    }
+
+    if (this._options.push !== false) {
+      this.push(data);
+    }
+
     callback();
   }
 }
