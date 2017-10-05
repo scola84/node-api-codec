@@ -22,12 +22,12 @@ function jsonCodec(options = {}) {
   };
 }
 
-function jsonFilter() {
+function jsonFilter(options = {}) {
   return (request, response, next) => {
     const header = request.header('Content-Type', true);
 
     if (header[0] === type) {
-      request.codec(jsonCodec());
+      request.codec(jsonCodec(options));
     }
 
     if (request.header('Accept') !== null) {
@@ -37,7 +37,7 @@ function jsonFilter() {
 
       if (negotiator.mediaType([type]) === type) {
         response.header('Content-Type', type);
-        response.codec(jsonCodec());
+        response.codec(jsonCodec(options));
       }
     }
 

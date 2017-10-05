@@ -10,7 +10,7 @@ export default class MsgPackEncoder extends Encoder {
     }
 
     const setLength =
-      this._options.length !== false &&
+      this._options.length === true &&
       Boolean(this._target) === true;
 
     if (setLength === true) {
